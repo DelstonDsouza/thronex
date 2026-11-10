@@ -1,0 +1,26 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: demo-services
+    static_configs:
+      - targets: ["api-gateway:8000"]
+        labels:
+          service: api-gateway
+          application: ecommerce-demo
+          environment: staging
+      - targets: ["order-service:8000"]
+        labels:
+          service: order-service
+          application: ecommerce-demo
+          environment: staging
+      - targets: ["payment-service:8000"]
+        labels:
+          service: payment-service
+          application: ecommerce-demo
+          environment: staging

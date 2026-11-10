@@ -29,6 +29,62 @@ services:
       timeout: 5s
       retries: 10
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: thronex-prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=7d"
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+
+  # ---------------- Demo application (the thing THRONEX monitors) ----------------
+  payment-service:
+    build: ./demo-app
+    container_name: demo-payment-service
+    environment:
+      ROLE: payment
+    ports:
+      - "8082:8000"
+    healthcheck: &demo-healthcheck
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  order-service:
+    build: ./demo-app
+    container_name: demo-order-service
+    environment:
+      ROLE: order
+      DOWNSTREAM_URL: http://payment-service:8000
+      DOWNSTREAM_NAME: payment-service
+    ports:
+      - "8081:8000"
+    depends_on:
+      payment-service:
+        condition: service_healthy
+    healthcheck: *demo-healthcheck
+
+  api-gateway:
+    build: ./demo-app
+    container_name: demo-api-gateway
+    environment:
+      ROLE: gateway
+      DOWNSTREAM_URL: http://order-service:8000
+      DOWNSTREAM_NAME: order-service
+    ports:
+      - "8080:8000"
+    depends_on:
+      order-service:
+        condition: service_healthy
+    healthcheck: *demo-healthcheck
+
 volumes:
   postgres_data:
   redis_data:
+  prometheus_data:

@@ -19,3 +19,5 @@ out/
 # OS / editor
 .DS_Store
 .vscode/
+
+ml-service/models/

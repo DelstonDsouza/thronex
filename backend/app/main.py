@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.api import auth, infrastructure
+from app.api import auth, infrastructure, monitoring
 
 app = FastAPI(
     title="THRONEX API",
@@ -10,6 +10,7 @@ app = FastAPI(
 
 app.include_router(auth.router)
 app.include_router(infrastructure.router)
+app.include_router(monitoring.router)
 
 
 @app.get("/health", tags=["system"])

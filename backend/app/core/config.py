@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     secret_key: str
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
+    prometheus_url: str = "http://localhost:9090"
 
     model_config = SettingsConfigDict(env_file=("../.env", ".env"), extra="ignore")
 

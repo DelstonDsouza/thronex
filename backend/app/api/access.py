@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.models import (
     Application,
     Environment,
+    Incident,
     OrganizationMember,
     Role,
     Service,
@@ -67,3 +68,14 @@ def load_service(
         db, user, service.environment.application.organization_id, min_role
     )
     return service
+
+def load_incident(
+    db: Session, user: User, incident_id: int, min_role: Role = Role.VIEWER
+) -> Incident:
+    incident = db.get(Incident, incident_id)
+    if incident is None:
+        raise _not_found()
+    require_org_role(
+        db, user, incident.environment.application.organization_id, min_role
+    )
+    return incident

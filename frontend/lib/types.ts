@@ -109,3 +109,18 @@ export interface DetectionReport {
   results: { service: string; outcome: string; detail: string }[];
   incident_ids: number[];
 }
+
+export interface Remediation {
+  id: number;
+  incident_id: number;
+  service_name: string;
+  container: string;
+  action_type: string;
+  status: string;
+  reason: string;
+  expected_impact: string;
+  created_at: string;
+  result_message: string | null;
+  verified: boolean | null;
+  verification: string | null;
+}

@@ -7,6 +7,7 @@ import Badge from "@/components/Badge";
 import { apiGet, apiPost } from "@/lib/api";
 import { fmtTime } from "@/lib/format";
 import type { IncidentDetail, Me } from "@/lib/types";
+import RemediationPanel from "@/components/RemediationPanel";
 
 // Mirrors the allowed transitions in backend/app/services/incident_workflow.py
 const NEXT: Record<string, string[]> = {
@@ -121,7 +122,7 @@ export default function IncidentPage() {
           </ul>
         </section>
       )}
-
+          <RemediationPanel incidentId={incident.id} incidentStatus={incident.status} onChanged={load} />
       {incident.resolution_notes && (
         <section className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4">
           <h2 className="mb-1 font-medium">Resolution notes</h2>

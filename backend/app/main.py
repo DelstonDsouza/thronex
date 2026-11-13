@@ -3,7 +3,7 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, incidents, infrastructure, monitoring
+from app.api import auth, incidents, infrastructure, monitoring, remediation
 
 app = FastAPI(
     title="THRONEX API",
@@ -23,6 +23,7 @@ app.include_router(auth.router)
 app.include_router(infrastructure.router)
 app.include_router(monitoring.router)
 app.include_router(incidents.router)
+app.include_router(remediation.router)
 
 
 @app.get("/health", tags=["system"])

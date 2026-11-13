@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 60
     prometheus_url: str = "http://localhost:9090"
     ml_service_url: str = "http://localhost:8100"
+    agent_url: str = "http://127.0.0.1:8200"
+    agent_key: str = ""
 
     model_config = SettingsConfigDict(env_file=("../.env", ".env"), extra="ignore")
 

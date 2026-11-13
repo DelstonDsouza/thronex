@@ -18,4 +18,5 @@ from app.models.infrastructure import (  # noqa: F401
     ServiceType,
 )
 from app.models.organization import Organization, OrganizationMember, Role  # noqa: F401
+from app.models.remediation import AuditLog, Remediation, RemediationStatus  # noqa: F401
 from app.models.user import User  # noqa: F401

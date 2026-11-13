@@ -14,6 +14,11 @@ const COLORS: Record<string, string> = {
   mitigating: "bg-violet-500/15 text-violet-300 border-violet-500/30",
   resolved: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
   closed: "bg-zinc-500/15 text-zinc-300 border-zinc-500/30",
+  recommended: "bg-sky-500/15 text-sky-300 border-sky-500/30",
+  executing: "bg-violet-500/15 text-violet-300 border-violet-500/30",
+  succeeded: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
+  failed: "bg-red-500/15 text-red-300 border-red-500/30",
+  rejected: "bg-zinc-500/15 text-zinc-300 border-zinc-500/30",
 };
 
 export default function Badge({ value }: { value: string }) {
